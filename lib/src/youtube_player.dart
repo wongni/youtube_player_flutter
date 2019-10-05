@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math' as math;
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -619,6 +620,11 @@ class YoutubePlayerController extends ValueNotifier<YoutubePlayerValue> {
         _evaluateJS('setPlaybackRate(2)');
         break;
     }
+  }
+
+  void setPlaybackRateWithDouble(double rate) {
+    double bracketedRate = math.max(0.25, math.min(2.0, rate));
+    _evaluateJS('setPlaybackRate($bracketedRate)');
   }
 
   void enterFullScreen() => value = value.copyWith(isFullScreen: true);
